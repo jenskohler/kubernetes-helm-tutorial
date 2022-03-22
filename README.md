@@ -54,4 +54,34 @@ INSERT INTO customer (id, date_of_birth, first_name, last_name) VALUES ('3', '20
 Test your local setup with accessing <http://localhost:8080/customers> (GET request). The previously inserted test data
 should appear.
 
+End your local application.
+
+Deploy your application in a Docker container and provide it to minikube.
+
+Access your minikube environment and let your Docker point to minikube:
+
+```cmd
+minikube docker-env
+
+eval $(minikube -p minikube docker-env)
+```
+
+List your minikube Docker images:
+
+```cmd
+docker images
+```
+
+Build a Docker image from your application. Change in your project folder (springboot-jpa-service) and use:
+
+```cmd
+docker build -t customer-service .
+```
+
+Verify that your image is present in the list of images
+
+```cmd
+docker images
+```
+
 ## Helm
