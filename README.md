@@ -16,24 +16,16 @@ Install kubectl from <https://kubernetes.io/de/docs/tasks/tools/install-kubectl/
 ### Start minikube
 
 Make sure that previous minikube stuff is deleted with
-
 ```cmd
 minikube delete
 ```
 
 Create a new minikube instance with
-
 ```cmd
 minikube start --cpus=2 --memory=5000
 ```
 
-### Deploy service to Kubernetes
-
-Build the sample _springboot-jpa-service_ with
-
-```cmd
-mvn clean install 
-```
+### (optional) Test your application on your local machine
 
 Start a MariaDB Docker container
 
@@ -51,10 +43,20 @@ INSERT INTO customer (id, date_of_birth, first_name, last_name) VALUES ('3', '20
 
 ```
 
+
+Start the Springboot application locally. 
+
 Test your local setup with accessing <http://localhost:8080/customers> (GET request). The previously inserted test data
 should appear.
 
 End your local application.
+
+### Deploy service to Kubernetes
+
+Build the sample _springboot-jpa-service_ with
+```cmd
+mvn clean install 
+```
 
 Deploy your application in a Docker container and provide it to minikube.
 
@@ -86,14 +88,18 @@ docker images
 
 ## Helm
 
-### Provision mariadb as backend
+### Provision Mariadb as backend
+
+The following steps are only required, if a new version of MariaDB should be 
+integrated. As there is already a chart in the _customer-service/charts_ folder, 
+these steps can be omitted. 
 
 Add the Bitnami Helm repository to your list of Helm repositories: 
 ```cmd 
 helm repo add bitnami https://charts.bitnami.com/bitnami
 ```
 
-Pull the mariadb image, which you would like to use, 
+Pull the Mariadb image, which you would like to use, 
 note that the latest release is pulled if nothing else is provided: 
 
 ```cmd 
@@ -107,14 +113,16 @@ tar -xvfz mariadb-10.4.2.tgz
 
 Examine your downloaded and unzipped folders and adapt the values according to your needs.
 
-Install the mariadb Helm chart:
+### Install the Mariadb Helm chart:
+
+Install the preconfigured MariaDB Helm chart:
 ```cmd
 cd customer-service/charts/
 
 helm install mariadb ./mariadb
 ```
 
-Upgrade the maridb Helm chart:
+Upgrade the Maridb Helm chart:
 ```cmd
 helm upgrade -i mariadb ./mariadb
 ```
@@ -128,6 +136,12 @@ cd <PROJECT_ROOT>/
 helm install customer-service ./customer-service
 ```
 
+Start the minikube dashboard with:
+```cmd
+minikube dashboard
+```
+
+It takes a while unitl all pods are green and running. Be patient!
 
 
 Remove the service:
