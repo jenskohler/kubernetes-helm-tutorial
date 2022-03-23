@@ -7,7 +7,7 @@ image:
 
 service:
   enabled: true
-  type: LoadBalancer
+  type: NodePort
   port: 8080
   targetPort: 8080
   nodePort: 18080
