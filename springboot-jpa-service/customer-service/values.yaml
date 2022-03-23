@@ -1,0 +1,22 @@
+replicaCount: 1
+
+image:
+  repository: customer-service
+  pullPolicy: IfNotPresent
+  tag: "latest"
+
+service:
+  enabled: true
+  type: LoadBalancer
+  port: 8080
+  targetPort: 8080
+  nodePort: 18080
+  protocol: TCP
+
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 10
+  targetCPUUtilizationPercentage: 80
+  # targetMemoryUtilizationPercentage: 80
+

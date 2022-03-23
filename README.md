@@ -54,4 +54,85 @@ INSERT INTO customer (id, date_of_birth, first_name, last_name) VALUES ('3', '20
 Test your local setup with accessing <http://localhost:8080/customers> (GET request). The previously inserted test data
 should appear.
 
+End your local application.
+
+Deploy your application in a Docker container and provide it to minikube.
+
+Access your minikube environment and let your Docker point to minikube:
+
+```cmd
+minikube docker-env
+
+eval $(minikube -p minikube docker-env)
+```
+
+List your minikube Docker images:
+
+```cmd
+docker images
+```
+
+Build a Docker image from your application. Change in your project folder (springboot-jpa-service) and use:
+
+```cmd
+docker build -t customer-service .
+```
+
+Verify that your image is present in the list of images
+
+```cmd
+docker images
+```
+
 ## Helm
+
+### Provision mariadb as backend
+
+Add the Bitnami Helm repository to your list of Helm repositories: 
+```cmd 
+helm repo add bitnami https://charts.bitnami.com/bitnami
+```
+
+Pull the mariadb image, which you would like to use, 
+note that the latest release is pulled if nothing else is provided: 
+
+```cmd 
+helm pull bitnami/mariadb
+```
+
+Extract the downloaded tar.gz file:
+```cmd 
+tar -xvfz mariadb-10.4.2.tgz
+```
+
+Examine your downloaded and unzipped folders and adapt the values according to your needs.
+
+Install the mariadb Helm chart:
+```cmd
+cd customer-service/charts/
+
+helm install mariadb ./mariadb
+```
+
+Upgrade the maridb Helm chart:
+```cmd
+helm upgrade -i mariadb ./mariadb
+```
+
+### Provision the customer service
+
+Provision the service configuration with Helm:
+```cmd
+cd <PROJECT_ROOT>/
+
+helm install customer-service ./customer-service
+```
+
+
+
+Remove the service:
+```cmd
+helm uninstall customer-service ./customer-service-chart
+```
+
+
