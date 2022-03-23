@@ -3,12 +3,15 @@ replicaCount: 1
 image:
   repository: customer-service
   pullPolicy: IfNotPresent
-  # Overrides the image tag whose default is the chart appVersion.
   tag: "latest"
 
 service:
-  type: NodePort
-  port: 80
+  enabled: true
+  type: LoadBalancer
+  port: 8080
+  targetPort: 8080
+  nodePort: 18080
+  protocol: TCP
 
 autoscaling:
   enabled: false
