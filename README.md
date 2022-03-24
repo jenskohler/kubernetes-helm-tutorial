@@ -20,10 +20,15 @@ Make sure that previous minikube stuff is deleted with
 minikube delete
 ```
 
-Create a new minikube instance with
+Create a new minikube instance with:
 ```cmd
-minikube start --cpus=2 --memory=5000
+minikube start --cpus=2 --memory=5000 --driver=vmware
 ```
+
+Note that there explicitly given a driver (vmware). The default is Docker, but on MacOS Docker cannot
+establish a tunnel between minikube and the localhost (there is no bridge0 interface). This is not imporant 
+for other operating systems. 
+
 
 ### (optional) Test your application on your local machine
 
