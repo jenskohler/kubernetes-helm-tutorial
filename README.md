@@ -38,7 +38,8 @@ Start a MariaDB Docker container
 docker run --name springboot-jpa-service-database -e MYSQL_ROOT_PASSWORD=jenskohler -p3306:3306 -d mariadb:latest
 ```
 
-Populate some sample test data
+Populate some sample test data (normally the create table statement should not be necessary, as the table has
+already been created by Springboot)
 
 ```sql
 use demo;
@@ -57,7 +58,11 @@ INSERT INTO customer (id, date_of_birth, first_name, last_name) VALUES ('3', '20
 ```
 
 
-Start the Springboot application locally. 
+Start the Springboot application locally, using the correct properties file: 
+
+```cmd
+java -jar -Dspring.profiles.active=local springboot-jpa-service-0.0.1-SNAPSHOT.jar
+```
 
 Test your local setup with accessing <http://localhost:8080/customers> (GET request). The previously inserted test data
 should appear.
