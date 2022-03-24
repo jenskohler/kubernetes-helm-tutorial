@@ -36,6 +36,14 @@ docker run --name springboot-jpa-service-database -e MYSQL_ROOT_PASSWORD=jenskoh
 Populate some sample test data
 
 ```sql
+use demo;
+CREATE TABLE customer (
+  id varchar(255) PRIMARY KEY NOT NULL, 
+  date_of_birth date, 
+  first_name varchar(255), 
+  last_name varchar(255)
+);
+
 USE demo;
 INSERT INTO customer (id, date_of_birth, first_name, last_name) VALUES ('1', '2022-01-01', 'homer', 'simpson');
 INSERT INTO customer (id, date_of_birth, first_name, last_name) VALUES ('2', '2022-02-02', 'marge', 'simpson');
@@ -143,6 +151,19 @@ minikube dashboard
 
 It takes a while unitl all pods are green and running. Be patient!
 
+
+To access the customer service create a tunnel from localhost to the k8s service
+```cmd 
+minikube service --url <SERVICE_NAME>
+minikube service --url customer-service
+```
+
+If the service is not accessible (mostly caused by a minikube bug) the service can be tested inside the
+pod the service runs in:
+
+```cmd
+curl http://localhost:8080/customers
+```
 
 Remove the service:
 ```cmd
