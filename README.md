@@ -151,6 +151,10 @@ minikube dashboard
 
 It takes a while unitl all pods are green and running. Be patient!
 
+An overview about the running services can be received with:
+```cmd
+kubectl get svc
+```
 
 To access the customer service create a tunnel from localhost to the k8s service
 ```cmd 
