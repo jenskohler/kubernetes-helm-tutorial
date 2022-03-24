@@ -10,7 +10,7 @@ service:
   type: NodePort
   port: 8080
   targetPort: 8080
-  nodePort: 18080
+  nodePort: 8080
   protocol: TCP
 
 autoscaling:
