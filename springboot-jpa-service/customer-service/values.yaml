@@ -6,11 +6,8 @@ image:
   tag: "latest"
 
 service:
-  enabled: true
   type: NodePort
   port: 8080
-  targetPort: 8080
-  nodePort: 8080
   protocol: TCP
 
 autoscaling:
