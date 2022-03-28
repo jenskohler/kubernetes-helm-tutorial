@@ -3,6 +3,7 @@ package de.kohlerjens.springboot.jpa.model;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -17,8 +18,8 @@ import java.sql.Date;
 @Entity
 @Table(name = "CUSTOMER")
 public class Customer implements Serializable {
-    @Id
-    @GeneratedValue
+    @Id @GeneratedValue(generator="system-uuid")
+    @GenericGenerator(name="system-uuid", strategy = "uuid")
     private String id;
     private String lastName;
     private String firstName;

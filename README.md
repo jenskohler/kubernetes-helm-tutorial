@@ -179,6 +179,11 @@ pod the service runs in:
 curl http://localhost:8080/customers
 ```
 
+Update only components, which have changed use the following Helm: 
+```cmd
+helm upgrade customer-service ./customer-service --reuse-values --set tracing.enabled=false
+```
+
 Remove the service:
 ```cmd
 helm uninstall customer-service ./customer-service-chart
