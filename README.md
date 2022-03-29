@@ -106,7 +106,7 @@ docker images
 
 ## Helm
 
-### Provision Mariadb as backend
+### (optional) Provision Mariadb as backend
 
 The following steps are only required, if a new version of MariaDB should be 
 integrated. As there is already a chart in the _customer-service/charts_ folder, 
@@ -131,7 +131,7 @@ tar -xvfz mariadb-10.4.2.tgz
 
 Examine your downloaded and unzipped folders and adapt the values according to your needs.
 
-### Install the Mariadb Helm chart:
+### (optional) Install the Mariadb Helm chart:
 
 Install the preconfigured MariaDB Helm chart:
 ```cmd
@@ -151,7 +151,7 @@ Provision the service configuration with Helm:
 ```cmd
 cd <PROJECT_ROOT>/
 
-helm install customer-service ./customer-service 
+helm install customer-service ./customer-service -f ./customer-service/values.yaml --dry-run --debug
 
 helm install customer-service ./customer-service -f ./customer-service/values.yaml
 ```
