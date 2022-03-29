@@ -1,12 +1,27 @@
+#spring:
+#  datasource:
+#    username: root
+#    url: jdbc:mysql://localhost:3306/demo?useSSL=false
+#    password: jenskohler
+#  jpa:
+#    properties:
+#  hibernate:
+#    dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+#    format_sql: 'true'
+#    ddl-auto: create-drop
+#    show-sql: 'true'
+
+
+#Postgres Config
 spring:
   datasource:
     username: root
-    url: jdbc:mysql://localhost:3306/demo?useSSL=false
+    url: jdbc:postgresql://localhost:5432/demo
     password: jenskohler
-  jpa:
-    properties:
-  hibernate:
-    dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+    initialize: true
+    initialization-mode: always
+  jpa.hibernate:
+    dialect: org.hibernate.dialect.PostgreSQLDialect
     format_sql: 'true'
     ddl-auto: create-drop
     show-sql: 'true'

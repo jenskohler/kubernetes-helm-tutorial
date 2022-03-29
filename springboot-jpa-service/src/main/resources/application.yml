@@ -1,3 +1,4 @@
+#MariaDB Config
 spring:
   datasource:
     username: root
@@ -8,3 +9,18 @@ spring:
     format_sql: 'true'
     ddl-auto: create-drop
     show-sql: 'true'
+
+#Postgres Config
+#spring:
+#  datasource:
+#    username: root
+#    url: jdbc:postgresql://customer-service-postgresql:5432/demo
+#    password: jenskohler
+#    initialize: true
+#    initialization-mode: always
+#  jpa.hibernate:
+#    dialect: org.hibernate.dialect.PostgreSQLDialect
+#    format_sql: 'true'
+#    ddl-auto: create-drop
+#    show-sql: 'true'
+

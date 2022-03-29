@@ -8,11 +8,11 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      app: customer-service
+      app: mariadb
   template:
     metadata:
       labels:
-        app: customer-service
+        app: mariadb
     spec:
       containers:
         - name: mariadb
