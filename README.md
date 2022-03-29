@@ -22,7 +22,7 @@ minikube delete
 
 Create a new minikube instance with:
 ```cmd
-minikube start --cpus=2 --memory=5000 --driver=vmware
+minikube start --cpus=4 --memory=5000 --driver=vmware
 ```
 
 Note that there explicitly given a driver (vmware). The default is Docker, but on MacOS Docker cannot
@@ -106,7 +106,7 @@ docker images
 
 ## Helm
 
-### Provision Mariadb as backend
+### (optional) Provision Mariadb as backend
 
 The following steps are only required, if a new version of MariaDB should be 
 integrated. As there is already a chart in the _customer-service/charts_ folder, 
@@ -131,7 +131,7 @@ tar -xvfz mariadb-10.4.2.tgz
 
 Examine your downloaded and unzipped folders and adapt the values according to your needs.
 
-### Install the Mariadb Helm chart:
+### (optional) Install the Mariadb Helm chart:
 
 Install the preconfigured MariaDB Helm chart:
 ```cmd
@@ -151,7 +151,9 @@ Provision the service configuration with Helm:
 ```cmd
 cd <PROJECT_ROOT>/
 
-helm install customer-service ./customer-service
+helm install customer-service ./customer-service -f ./customer-service/values.yaml --dry-run --debug
+
+helm install customer-service ./customer-service -f ./customer-service/values.yaml
 ```
 
 Start the minikube dashboard with:
@@ -177,6 +179,11 @@ pod the service runs in:
 
 ```cmd
 curl http://localhost:8080/customers
+```
+
+Update only components, which have changed use the following Helm: 
+```cmd
+helm upgrade customer-service ./customer-service --reuse-values --set tracing.enabled=false
 ```
 
 Remove the service:

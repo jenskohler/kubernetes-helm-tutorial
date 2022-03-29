@@ -1,19 +1,52 @@
-replicaCount: 1
+## Customer Service
+customerService:
+  replicaCount: 1
+  image:
+    repository: customer-service
+    #Always does not work for minikube (error pulling image), so we just use the latest tag
+    pullPolicy: IfNotPresent
+    tag: "latest"
+  service:
+    type: NodePort
+    port: 8080
+    protocol: TCP
+  autoscaling:
+    enabled: false
+    minReplicas: 1
+    maxReplicas: 10
+    targetCPUUtilizationPercentage: 80
+    # targetMemoryUtilizationPercentage: 80
+  resources:
+    limits:
+      memory: 2Gi
+      cpu: "1"
 
-image:
-  repository: customer-service
-  pullPolicy: IfNotPresent
-  tag: "latest"
+## PostgreSQL Database Service
+postgresqlService:
+  replicaCount: 1
+  image:
+    repository: customer-service-db-postgres
+    #Always does not work for minikube (error pulling image), so we just use the latest tag
+    #pullPolicy: Always
+    tag: "latest"
+  service:
+    type: NodePort
+    port: 5432
+    protocol: TCP
+  autoscaling:
+    enabled: false
+    minReplicas: 1
+    maxReplicas: 10
+    targetCPUUtilizationPercentage: 80
+    # targetMemoryUtilizationPercentage: 80
+  resources:
+    limits:
+      memory: 2Gi
+      cpu: "1"
 
-service:
-  type: NodePort
-  port: 8080
-  protocol: TCP
-
-autoscaling:
-  enabled: false
-  minReplicas: 1
-  maxReplicas: 10
-  targetCPUUtilizationPercentage: 80
-  # targetMemoryUtilizationPercentage: 80
-
+## MariaDB Database Service
+mariadbService:
+  service:
+    type: NodePort
+    port: 3306
+    protocol: TCP
