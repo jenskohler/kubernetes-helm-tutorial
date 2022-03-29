@@ -22,7 +22,7 @@ minikube delete
 
 Create a new minikube instance with:
 ```cmd
-minikube start --cpus=2 --memory=5000 --driver=vmware
+minikube start --cpus=4 --memory=5000 --driver=vmware
 ```
 
 Note that there explicitly given a driver (vmware). The default is Docker, but on MacOS Docker cannot
@@ -151,7 +151,9 @@ Provision the service configuration with Helm:
 ```cmd
 cd <PROJECT_ROOT>/
 
-helm install customer-service ./customer-service
+helm install customer-service ./customer-service 
+
+helm install customer-service ./customer-service -f ./customer-service/values.yaml
 ```
 
 Start the minikube dashboard with:
