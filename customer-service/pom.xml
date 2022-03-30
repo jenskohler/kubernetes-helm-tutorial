@@ -11,9 +11,9 @@
         <relativePath/>
     </parent>
     <groupId>de.kohlerjens</groupId>
-    <artifactId>springboot-jpa-service</artifactId>
+    <artifactId>customer-service</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>springboot-jpa-service</name>
+    <name>customer-service</name>
     <description>Demo project for Spring Boot and JPA</description>
     <properties>
         <java.version>11</java.version>
