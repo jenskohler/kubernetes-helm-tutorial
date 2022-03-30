@@ -22,7 +22,7 @@ minikube delete
 
 Create a new minikube instance with:
 ```cmd
-minikube start --cpus=4 --memory=5000 --driver=vmware
+minikube start --cpus=8 --memory=10000 --driver=vmware
 ```
 
 Note that there explicitly given a driver (vmware). The default is Docker, but on MacOS Docker cannot
@@ -61,7 +61,8 @@ INSERT INTO customer (id, date_of_birth, first_name, last_name) VALUES ('3', '20
 Start the Springboot application locally, using the correct properties file: 
 
 ```cmd
-java -jar -Dspring.profiles.active=local springboot-jpa-service-0.0.1-SNAPSHOT.jar
+java -jar -Dspring.profiles.active=local customer-service-0.0.1-SNAPSHOT.jar
+java -jar -Dspring.profiles.active=local order-service-0.0.1-SNAPSHOT.jar
 ```
 
 Test your local setup with accessing <http://localhost:8080/customers> (GET request). The previously inserted test data
@@ -95,7 +96,11 @@ docker images
 Build a Docker image from your application. Change in your project folder (springboot-jpa-service) and use:
 
 ```cmd
+cd customer-service
 docker build -t customer-service .
+
+cd order-service
+docker build -t order-service .
 ```
 
 Verify that your image is present in the list of images
@@ -149,11 +154,13 @@ helm upgrade -i mariadb ./mariadb
 
 Provision the service configuration with Helm:
 ```cmd
-cd <PROJECT_ROOT>/
-
+cd customer-service
 helm install customer-service ./customer-service -f ./customer-service/values.yaml --dry-run --debug
-
 helm install customer-service ./customer-service -f ./customer-service/values.yaml
+
+cd order-service
+helm install order-service ./order-service -f ./order-service/values.yaml --dry-run --debug
+helm install order-service ./order-service -f ./order-service/values.yaml
 ```
 
 Start the minikube dashboard with:
