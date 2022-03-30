@@ -23,5 +23,6 @@ public class Order implements Serializable {
     private String id;
     private String name;
     private Date date;
+    private String customerId;
 
 }
