@@ -48,4 +48,6 @@ public class OrderController {
     public String deleteOrder(@PathVariable String id) {
         return service.deleteOrder(id);
     }
+
+    //TODO: add feignclient that receives customer data, i.e. @GetMapping(/order/{id}/{customerId})
 }

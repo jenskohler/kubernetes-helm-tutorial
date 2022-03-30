@@ -53,5 +53,8 @@ public class OrderService {
         return repository.save(existingOrder);
     }
 
+    public List<Order> getOrderByCustomerId(String customerId) {
+        return repository.findByCustomerId(customerId);
+    }
 
 }
