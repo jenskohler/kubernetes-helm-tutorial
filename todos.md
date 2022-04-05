@@ -15,6 +15,16 @@
 - actual behavior: there are only 2 services 
 - expected behavior: create some more services, such that more advanced implementations become possible
 
+## Create an authentication mechanism
+
+- actual behavior: any services can be called by anybode
+- expected behavior: an auth mechanism (e.g. JWT) is used to distinguish which user can invoke which service
+
+## Encrypt the communication with https
+
+- actual behavior: all services communicate via http
+- expected behavior: all services communicate via https (use key and truststores)
+
 ## Ensure transaction safety over microservices
 
 - actual behavior: inconsistencies between the customer and order service are possible when the communication between the services fail
