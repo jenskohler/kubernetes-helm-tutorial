@@ -10,6 +10,11 @@
 - actual behavior: as minikube has no load balancer integrated, exposing services to the host has to be done manually
 - expected behavior: create a service mesh that exposes minikube services automatically
 
+## Integrate an advanced service communication mechanism
+
+- actual behavior: services do not communicate with each other
+- expected behavior: services communicate in a standardized way with each other (e.g RestTemplate, or better FeignClients)
+
 ## Create some more services
 
 - actual behavior: there are only 2 services 
