@@ -42,7 +42,8 @@ Populate some sample test data (normally the create table statement should not b
 already been created by Springboot)
 
 ```sql
-use demo;
+CREATE DATABASE demo;
+USE demo;
 CREATE TABLE customer (
   id varchar(255) PRIMARY KEY NOT NULL, 
   date_of_birth date, 
@@ -50,10 +51,10 @@ CREATE TABLE customer (
   last_name varchar(255)
 );
 
-USE demo;
-INSERT INTO customer (id, date_of_birth, first_name, last_name) VALUES ('1', '2022-01-01', 'homer', 'simpson');
-INSERT INTO customer (id, date_of_birth, first_name, last_name) VALUES ('2', '2022-02-02', 'marge', 'simpson');
-INSERT INTO customer (id, date_of_birth, first_name, last_name) VALUES ('3', '2022-03-03', 'lisa', 'simpson');
+    USE demo;
+    INSERT INTO customer (id, date_of_birth, first_name, last_name) VALUES ('1', '2022-01-01', 'homer', 'simpson');
+    INSERT INTO customer (id, date_of_birth, first_name, last_name) VALUES ('2', '2022-02-02', 'marge', 'simpson');
+    INSERT INTO customer (id, date_of_birth, first_name, last_name) VALUES ('3', '2022-03-03', 'lisa', 'simpson');
 
 ```
 
@@ -68,7 +69,95 @@ java -jar -Dspring.profiles.active=local order-service-0.0.1-SNAPSHOT.jar
 Test your local setup with accessing <http://localhost:8080/customers> (GET request). The previously inserted test data
 should appear.
 
+```
+curl http://localhost:8080/customers
+```
+
 End your local application.
+
+
+### (optional) Integrate mTLS into the services
+
+To generate self-signed certificates use the commands below. 
+The key pairs are generated into _server.p12_ and _client.p12_. 
+We extract the public keys to _client.cer_ and _server.cer_ and import them into 
+_client-truststore.p12_ and _server-truststore.p12_
+
+
+Use Java's keytool to generate a key pair for the server. 
+
+```
+cd customer-service/src/main/resources
+keytool -genkeypair -alias customer-service -keyalg RSA -keysize 4096 -validity 365 -dname "CN=Server,OU=Server,O=Examples,L=,S=CA,C=U" -keypass changeit -keystore customer-service-keystore.p12 -storeType PKCS12 -storepass changeit
+
+cd order-service/src/main/resources
+keytool -genkeypair -alias order-service -keyalg RSA -keysize 4096 -validity 365 -dname "CN=Server,OU=Server,O=Examples,L=,S=CA,C=U" -keypass changeit -keystore order-service-keystore.p12 -storeType PKCS12 -storepass changeit
+```
+
+Use Java's keytool to generate a key pair fo the client.
+
+```
+cd customer-service/src/main/resources
+keytool -genkeypair -alias client -keyalg RSA -keysize 4096 -validity 365 -dname "CN=Client,OU=Server,O=Examples,L=,S=CA,C=U" -keypass changeit -keystore client.p12 -storeType PKCS12 -storepass changeit
+```
+
+Export public keys (generate certificate files)
+
+```
+keytool -exportcert -alias customer-service -file customer-service.cer -keystore customer-service-keystore.p12 -storepass changeit
+keytool -exportcert -alias client -file client.cer -keystore client.p12 -storepass changeit
+
+cd order-service/src/main/resources
+keytool -exportcert -alias order-service -file order-service.cer -keystore order-service-keystore.p12 -storepass changeit
+```
+
+Import public keys into truststores
+
+```
+keytool -importcert -keystore customer-service-truststore.p12 -alias client-public -file client.cer -storepass changeit -noprompt
+keytool -importcert -keystore client-truststore.p12 -alias customer-service-public -file customer-service.cer -storepass changeit -noprompt
+keytool -importcert -keystore client-truststore.p12 -alias order-service-public -file order-service.cer -storepass changeit -noprompt
+
+cd order-service/src/main/resources
+keytool -importcert -keystore order-service-truststore.p12 -alias client-public -file ../../../../customer-service/src/main/resources/client.cer -storepass changeit -noprompt
+keytool -importcert -keystore client-truststore.p12 -alias customer-service-public -file ../../../../customer-service/src/main/resources/customer-service.cer -storepass changeit -noprompt
+
+```
+
+
+Show content of truststore
+
+```
+keytool -list -keystore customer-service-truststore.p12
+```
+
+Activate TLS in _application.yml_ with the following properties
+
+```
+server:
+  port: 8443
+  ssl:
+    key-store-type: PKCS12
+    key-store: classpath:customer-service-keystore.p12
+    key-store-password: changeit
+    key-alias: customer-service
+    client-auth: need
+    trust-store: classpath:customer-service-truststore.p12
+    trust-store-password: changeit
+```
+
+Alternatively, these properties can be passed as java arguments, so the jar must not be rebuilt:
+
+```
+java -jar -Dspring.profiles.active=local customer-service-0.0.1-SNAPSHOT.jar --server.ssl.key-store-type=PKCS12 --server.ssl.key-store=server.p12-server.port=8443
+```
+
+As soon as https is enabled, the services listen to the following ports: 
+
+```
+curl -k -v --cert-type P12 --cert client.p12:changeit https://localhost:8443/customers
+curl -k -v --cert-type P12 --cert client.p12:changeit https://localhost:18443/orders
+```
 
 ### Deploy service to Kubernetes
 
