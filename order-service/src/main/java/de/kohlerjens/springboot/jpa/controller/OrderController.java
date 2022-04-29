@@ -50,4 +50,8 @@ public class OrderController {
     }
 
     //TODO: add feignclient that receives customer data, i.e. @GetMapping(/order/{id}/{customerId})
+    @GetMapping("/orders/{customerId}")
+    public List<Order> findOrderByCustomerId(@PathVariable String customerId) {
+        return service.getOrderByCustomerId(customerId);
+    }
 }
