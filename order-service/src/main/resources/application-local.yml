@@ -1,3 +1,6 @@
+server:
+  port: 18080
+
 #MariaDB Config
 spring:
   datasource:
@@ -32,6 +35,6 @@ spring:
 #    key-store: classpath:order-service-keystore.p12
 #    key-store-password: changeit
 #    key-alias: order-service
-#    client-auth: need
+#    client-auth: want
 #    trust-store: classpath:order-service-truststore.p12
 #    trust-store-password: changeit
