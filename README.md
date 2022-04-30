@@ -161,6 +161,10 @@ curl -k -v --cert-type P12 --cert client.p12:changeit https://localhost:8443/cus
 curl -k -v --cert-type P12 --cert client.p12:changeit https://localhost:18443/orders
 ```
 
+To use the self-signed certificates in Postman, these first have to be added
+
+![add certs to Postman](res/add_certs_to_postman.jpg)
+
 ### Deploy service to Kubernetes
 
 Build the sample _springboot-jpa-service_ with
