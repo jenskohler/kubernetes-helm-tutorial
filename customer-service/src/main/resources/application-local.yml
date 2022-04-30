@@ -1,3 +1,6 @@
+server:
+  port: 8080
+
 spring:
   datasource:
     username: root
@@ -10,8 +13,7 @@ spring:
         format_sql: 'true'
         ddl-auto: create-drop
         show-sql: 'true'
-server:
-  port: 8080
+
 
 #Postgres Config
 #spring:
@@ -34,10 +36,12 @@ server:
 #    key-store: classpath:customer-service-keystore.p12
 #    key-store-password: changeit
 #    key-alias: customer-service
-#    client-auth: need
+#    client-auth: want
 #    trust-store: classpath:customer-service-truststore.p12
 #    trust-store-password: changeit
+
 
 feign:
   name: customer-feign
   url: http://localhost:18080
+  #for mTLS use https://localhost:18443

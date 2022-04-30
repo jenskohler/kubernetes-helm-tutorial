@@ -115,12 +115,13 @@ Import public keys into truststores
 
 ```
 keytool -importcert -keystore customer-service-truststore.p12 -alias client-public -file client.cer -storepass changeit -noprompt
+keytool -importcert -keystore customer-service-truststore.p12 -alias order-service-public -file ../../../../order-service/src/main/resources/order-service.cer -storepass changeit -noprompt
 keytool -importcert -keystore client-truststore.p12 -alias customer-service-public -file customer-service.cer -storepass changeit -noprompt
-keytool -importcert -keystore client-truststore.p12 -alias order-service-public -file order-service.cer -storepass changeit -noprompt
+keytool -importcert -keystore client-truststore.p12 -alias order-service-public -file ../../../../order-service/src/main/resources/order-service.cer -storepass changeit -noprompt
 
 cd order-service/src/main/resources
 keytool -importcert -keystore order-service-truststore.p12 -alias client-public -file ../../../../customer-service/src/main/resources/client.cer -storepass changeit -noprompt
-keytool -importcert -keystore client-truststore.p12 -alias customer-service-public -file ../../../../customer-service/src/main/resources/customer-service.cer -storepass changeit -noprompt
+keytool -importcert -keystore order-service-truststore.p12 -alias customer-service-public -file ../../../../customer-service/src/main/resources/customer-service.cer -storepass changeit -noprompt
 
 ```
 
@@ -129,6 +130,7 @@ Show content of truststore
 
 ```
 keytool -list -keystore customer-service-truststore.p12
+keytool -list -keystore order-service-truststore.p12
 ```
 
 Activate TLS in _application.yml_ with the following properties
