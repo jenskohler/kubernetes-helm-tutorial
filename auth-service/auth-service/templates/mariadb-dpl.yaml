@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: auth-db-mariadb
+  labels:
+    app: auth-db-mariadb
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: auth
+  template:
+    metadata:
+      labels:
+        app: auth
+    spec:
+      containers:
+        - name: mariadb
+          image: mariadb
+          ports:
+            - containerPort: 3306
+              name: maria-db-port
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              value: "jenskohler"
+            - name: MYSQL_DATABASE
+              value: "demo"
