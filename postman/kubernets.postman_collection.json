@@ -1,0 +1,264 @@
+{
+	"info": {
+		"_postman_id": "3dd886b1-afa9-4b1a-b96c-4bcf26682885",
+		"name": "kubernets example",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "/customers",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}:{{customer_url_port}}/customers",
+					"host": [
+						"{{url}}"
+					],
+					"port": "{{customer_url_port}}",
+					"path": [
+						"customers"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/customer/orders",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}:{{customer_url_port}}/402881bd80789fa7018078a15a840000/orders",
+					"host": [
+						"{{url}}"
+					],
+					"port": "{{customer_url_port}}",
+					"path": [
+						"402881bd80789fa7018078a15a840000",
+						"orders"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/auth/test/all",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJqZW5zIiwiaWF0IjoxNjUxNDg5NDQxLCJleHAiOjE2NTE1NzU4NDF9.GG5t1GZQTtGMvW_iDbXcvLAN4rzdaJnyJHdk9ni52cgxWweuK2bdYYSn_NMx4zXjD4hnkOBKW3LDuNfIsN8IiQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}:{{auth_url_port}}/auth/showcase/admin",
+					"host": [
+						"{{url}}"
+					],
+					"port": "{{auth_url_port}}",
+					"path": [
+						"auth",
+						"showcase",
+						"admin"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "restTemplate/customer/addOrder",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Homer's Order\",\n    \"date\": \"2020-02-02\",\n    \"customerId\": \"2c9180837fdc014b017fdc045b720000\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}:{{customer_url_port}}/restTemplate/2c9180837fdc014b017fdc045b720000/addOrder",
+					"host": [
+						"{{url}}"
+					],
+					"port": "{{customer_url_port}}",
+					"path": [
+						"restTemplate",
+						"2c9180837fdc014b017fdc045b720000",
+						"addOrder"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/orders",
+			"protocolProfileBehavior": {
+				"strictSSL": false
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}:{{order_url_port}}/orders",
+					"host": [
+						"{{url}}"
+					],
+					"port": "{{order_url_port}}",
+					"path": [
+						"orders"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/addOrder",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Homer's Order\",\n    \"date\": \"2020-02-02\",\n    \"customerId\": \"402881bd80789fa7018078a15a840000\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}:{{order_url_port}}/addOrder",
+					"host": [
+						"{{url}}"
+					],
+					"port": "{{order_url_port}}",
+					"path": [
+						"addOrder"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/customer/addOrder",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Homer's Order\",\n    \"date\": \"2020-02-02\",\n    \"customerId\": \"2c9180837fdc014b017fdc045b720000\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}:{{customer_url_port}}/2c9180837fdc014b017fdc045b720000/addOrder",
+					"host": [
+						"{{url}}"
+					],
+					"port": "{{customer_url_port}}",
+					"path": [
+						"2c9180837fdc014b017fdc045b720000",
+						"addOrder"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/addCustomer",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"firstName\": \"Homer\",\n    \"lastName\": \"Simpson\",\n    \"dateOfBirth\": \"2020-02-02\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}:{{customer_url_port}}/addCustomer",
+					"host": [
+						"{{url}}"
+					],
+					"port": "{{customer_url_port}}",
+					"path": [
+						"addCustomer"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/auth/signup",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"jens\",\n    \"email\": \"vielleicht@web.de\",\n    \"password\": \"jenskohler\",\n    \"role\": [\"mod\", \"user\"]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}:{{auth_url_port}}/auth/signup",
+					"host": [
+						"{{url}}"
+					],
+					"port": "{{auth_url_port}}",
+					"path": [
+						"auth",
+						"signup"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/auth/signin",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"jens\",\n    \"password\": \"jenskohler\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}:{{auth_url_port}}/auth/signin",
+					"host": [
+						"{{url}}"
+					],
+					"port": "{{auth_url_port}}",
+					"path": [
+						"auth",
+						"signin"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
