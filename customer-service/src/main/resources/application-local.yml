@@ -10,9 +10,9 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQL5InnoDBDialect
-        format_sql: 'true'
-        ddl-auto: create-drop
-        show-sql: 'true'
+        ddl-auto: update
+  format_sql: true
+  show-sql: true
 
 
 #Postgres Config
@@ -45,3 +45,4 @@ feign:
   name: customer-feign
   url: http://localhost:18080
   #for mTLS use https://localhost:18443
+
