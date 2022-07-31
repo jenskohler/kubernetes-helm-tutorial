@@ -25,6 +25,11 @@ Create a new minikube instance with:
 minikube start --cpus=8 --memory=10000 --driver=vmware
 ```
 
+On Mac M1 platform we do not have this large amount of resources, so we must downstrip a bit
+```cmd
+minikube start --cpus=6 --memory=10000 --driver=docker
+```
+
 Note that there explicitly given a driver (vmware). The default is Docker, but on MacOS Docker cannot
 establish a tunnel between minikube and the localhost (there is no bridge0 interface). This is not imporant 
 for other operating systems. 
@@ -276,6 +281,7 @@ minikube service --url <SERVICE_NAME>
 minikube service --url customer-service
 ```
 
+The service should now be accessible via the URL and the Port that the previous command prints out.
 If the service is not accessible (mostly caused by a minikube bug) the service can be tested inside the
 pod the service runs in:
 
@@ -290,7 +296,7 @@ helm upgrade customer-service ./customer-service --reuse-values --set tracing.en
 
 Remove the service:
 ```cmd
-helm uninstall customer-service ./customer-service-chart
+helm uninstall customer-service
 ```
 
 
