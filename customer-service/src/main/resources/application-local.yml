@@ -42,7 +42,7 @@ spring:
 
 
 feign:
-  name: customer-feign
+  name: feignCustomer
   url: http://localhost:18080
   #for mTLS use https://localhost:18443
 

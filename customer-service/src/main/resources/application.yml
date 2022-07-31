@@ -10,6 +10,11 @@ spring:
     ddl-auto: create-drop
     show-sql: 'true'
 
+feign:
+  name: feignCustomer
+  url: http://order-service
+  #for mTLS use https://localhost:18443
+
 #Postgres Config
 #spring:
 #  datasource:
