@@ -299,4 +299,47 @@ Remove the service:
 helm uninstall customer-service
 ```
 
+## Istio with Minikube
 
+Install Istio and add it to your path
+```cmd
+curl -L https://git.io/getLatestIstio | sh -
+```
+
+Extract the downloaded folder and put the _bin_ directory to your _PATH_
+Check the installation with: 
+
+```cmd
+istioctl
+```
+
+Switch to your minikube environment and install Istio:
+
+```cmd
+minikube docker-env
+eval $(minikube -p minikube docker-env)
+istioctl install
+```
+
+After this, an _Istio LoadBalancer_ and an _Istio Service_ are created in the minikube cluster. 
+Check this with:
+
+```cmd
+kubectl get svc -A
+```
+
+Note that Istio currently does not have a PublicIP. This can be fixed with:
+
+```cmd
+minikube docker-env
+eval $(minikube -p minikube docker-env)
+minikube tunnel
+```
+
+Now we have 2 Istio services running and the _ingress_ is accessible via _localhost_:
+
+![Istio in minikube](res/istio_in_minikube.jpg)
+
+![Istio in minikube dashboard](res/istio_in_minikube_dashboard.jpg)
+
+## tbd. Install Istio via Helm
