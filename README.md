@@ -172,6 +172,11 @@ To use the self-signed certificates in Postman, these first have to be added
 
 ### Deploy service to Kubernetes
 
+All commands of this section can be executed via Shell script:
+```cmd
+./run.sh
+```
+
 Build the sample _springboot-jpa-service_ with
 ```cmd
 mvn clean install 
@@ -342,4 +347,41 @@ Now we have 2 Istio services running and the _ingress_ is accessible via _localh
 
 ![Istio in minikube dashboard](res/istio_in_minikube_dashboard.jpg)
 
-## tbd. Install Istio via Helm
+## Install Istio via Helm
+
+```cmd
+helm repo add istio https://istio-release.storage.googleapis.com/charts
+helm repo update
+```
+
+Create a namespace istio-system for Istio components:
+
+```cmd
+kubectl create namespace istio-system
+```
+
+Install Istio base chart which contains cluster-wide resources used by the Istio control plane:
+
+```cmd
+helm install istio-base istio/base -n istio-system
+```
+
+Install Istio discovery chart which deploys the istiod service:
+
+```cmd
+helm install istiod istio/istiod -n istio-system --wait
+```
+
+Install an Istio ingress gateway:
+
+```cmd
+kubectl create namespace istio-ingress
+kubectl label namespace istio-ingress istio-injection=enabled
+helm install istio-ingress istio/gateway -n istio-ingress --wait
+```
+
+Create a tunnel to access Istio ingress:
+
+```cmd
+minikube tunnel
+```
