@@ -1,5 +1,7 @@
 ## Customer Service
 customerService:
+  labels:
+    istio-injection: enabled
   replicaCount: 1
   image:
     repository: customer-service

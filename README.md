@@ -354,6 +354,18 @@ helm repo add istio https://istio-release.storage.googleapis.com/charts
 helm repo update
 ```
 
+Find your local Helm repository with:
+
+```cmd
+helm env
+```
+
+For instance, on a Mac the repository location is
+
+```cmd
+/Users/<USER_NAME>/Library/Caches/helm
+```
+
 Create a namespace istio-system for Istio components:
 
 ```cmd
