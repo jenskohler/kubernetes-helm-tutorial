@@ -347,7 +347,7 @@ Now we have 2 Istio services running and the _ingress_ is accessible via _localh
 
 ![Istio in minikube dashboard](res/istio_in_minikube_dashboard.jpg)
 
-## Install Istio via Helm
+## Install Istio via Official Helm Chart Repository
 
 ```cmd
 helm repo add istio https://istio-release.storage.googleapis.com/charts
@@ -375,13 +375,13 @@ kubectl create namespace istio-system
 Install Istio base chart which contains cluster-wide resources used by the Istio control plane:
 
 ```cmd
-helm install istio-base istio/base -n istio-system
+helm upgrade -i istio-base istio/base -n istio-system
 ```
 
 Install Istio discovery chart which deploys the istiod service:
 
 ```cmd
-helm install istiod istio/istiod -n istio-system --wait
+helm upgrade -i istiod istio/istiod -n istio-system --wait
 ```
 
 Install an Istio ingress gateway:
@@ -389,11 +389,25 @@ Install an Istio ingress gateway:
 ```cmd
 kubectl create namespace istio-ingress
 kubectl label namespace istio-ingress istio-injection=enabled
-helm install istio-ingress istio/gateway -n istio-ingress --wait
+helm upgrade -i istio-ingress istio/gateway -n istio-ingress --wait
 ```
 
 Create a tunnel to access Istio ingress:
 
 ```cmd
 minikube tunnel
+```
+
+
+## Install Istio via Customized Helm Charts
+
+Install base packages:
+
+```cmd
+cd istio/base
+kubectl create namespace istio-ingress
+kubectl label namespace istio-ingress istio-injection=enabled
+helm upgrade -i istio-base istio/base -n istio-system
+helm upgrade -i istiod istio/istiod --namespace istio-system
+helm upgrade -i istio-ingress istio/gateway -n istio-ingress
 ```

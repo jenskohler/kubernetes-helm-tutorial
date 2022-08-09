@@ -12,11 +12,13 @@ echo "DOCKER STARTED"
 echo "STARTING MINIKUBE"
 minikube delete
 read -p "Press enter to continue if Minikube has already been deleted"
-minikube start --cpus=6 --memory=10000 --driver=docker
+minikube start --cpus=8 --memory=13000 --driver=docker
 read -p "Press enter to continue if Minikube has already been initialized"
 echo "MINIKUBE STARTED"
 
-source set_kube_context.sh
+echo "PROVISION ISTIO"
+# source install_istio.sh
+echo "ISTIO PROVISIONED"
 
 echo "PROVISION SERVICES"
 source provision_services.sh
